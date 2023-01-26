@@ -7,6 +7,8 @@ Firstly you may have an updated environment for running React-Native apps:
 
 Then it's just execute those commands and the app may pop in your chosen emulator:
 
-1. npm install
-2-a. npm run android
-2-b. npm run ios
+<ul>
+  <li>1. npm install</li>
+  <li>2-a. npm run android</li>
+  <li>2-b. npm run ios</li>
+</ul>
