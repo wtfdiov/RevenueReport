@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {StatusBar} from 'react-native';
-import DateTimePicker, {
+import {StatusBar, View} from 'react-native';
+import {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 
@@ -17,6 +17,8 @@ import ReportDisplay from './ReportDisplay/ReportDisplay';
 import {Revenue} from '../../../types/Revenue';
 import {Field} from './Info/Info.styles';
 import DateButton from './DateButton/DateButton';
+import Select from '../../components/Select/Select';
+import currencyFormat from '../../utils/currencyFormat';
 
 export default function ReportScreen() {
   const [revenue, setRevenue] = useState<Revenue | null>(null);
@@ -80,7 +82,7 @@ export default function ReportScreen() {
     event: DateTimePickerEvent,
     newValue: Date | undefined = undefined,
   ) => {
-    if (newValue && newValue !== selectedDate) {
+    if (newValue && newValue.getTime() !== selectedDate?.getTime()) {
       setSelectedDate(newValue);
     }
     handleDatePickerDisplay(false);
@@ -104,6 +106,20 @@ export default function ReportScreen() {
     );
   };
 
+  const getValidation = () => {
+    if (revenue) {
+      return `${currencyFormat(revenue.offer.validation)} validation`;
+    }
+    return '';
+  }
+
+  const getPurchase = () => {
+    if (revenue) {
+      return `${revenue.offer.item} purchase (${currencyFormat(revenue.offer.unitCost)})`;
+    }
+    return '';
+  }
+
   return (
     <>
       <StatusBar />
@@ -111,6 +127,7 @@ export default function ReportScreen() {
       <Container>
         <GroupSpacing>
           <Field>SELECT OFFER AND TIME</Field>
+          <Select highlightedLabel={getValidation()} label={getPurchase()} disabled={false} />
           <DateConfigRow>
             <DateButton
               label={getDateString()}
@@ -119,6 +136,7 @@ export default function ReportScreen() {
               handleDateSelected={handleDateSelected}
               onPress={openPicker}
             />
+            <Select highlightedLabel="DAY" disabled={true} />
           </DateConfigRow>
         </GroupSpacing>
         {renderReport()}
@@ -126,3 +144,4 @@ export default function ReportScreen() {
     </>
   );
 }
+

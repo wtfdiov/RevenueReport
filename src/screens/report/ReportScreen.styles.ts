@@ -27,6 +27,8 @@ export const RevenueValue = styled.Text`
 `;
 
 export const DateConfigRow = styled.View`
+flex-direction: row;
+justify-content: space-between;
   margin-top: 12px;
 `;
 
