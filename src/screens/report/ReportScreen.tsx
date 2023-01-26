@@ -110,7 +110,7 @@ export default function ReportScreen() {
     if (revenue) {
       return `${currencyFormat(revenue.offer.validation)} validation`;
     }
-    return '';
+    return 'No offer selected';
   }
 
   const getPurchase = () => {
